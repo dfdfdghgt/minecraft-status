@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <title>Minecraft Server Status</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; background: #f0f0f0; }
+        #status { font-size: 24px; color: green; }
+        .offline { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Minecraft Server Monitor</h1>
+    <p>Server IP: <strong>stablesmpn.falixsrv.me</strong> (Port: 25565)</p>
+    <div id="status">Loading...</div>
+    <script>
+        async function checkStatus() {
+            try {
+                const response = await fetch('http://stablesmpn.falixsrv.me:25565/api/playercount');
+                const data = await response.json();
+                document.getElementById('status').innerHTML = `Online Players: ${data.playercount}`;
+            } catch (error) {
+                document.getElementById('status').innerHTML = 'Server Offline or Error';
+                document.getElementById('status').classList.add('offline');
+            }
+        }
+        checkStatus();
+        setInterval(checkStatus, 60000);
+    </script>
+</body>
+</html>
